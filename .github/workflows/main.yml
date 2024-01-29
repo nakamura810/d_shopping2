@@ -2,11 +2,10 @@ uses: actions/checkout@v3
 uses: Dylan700/sftp-upload-action@latest
 
 with:
-  server: sftp.server.com
-  username: jason-bourne
-  key: ${{secrets.key}}
-  passphrase: ${{secrets.passphrase}}
-  port: 22
+  server: ${{secrets.SFTP_SERVER}}
+  username: ${{secrets.SFTP_USERNAME}}
+  key: ${{secrets.KEY}}
+  port: ${{secrets.SFTP_PORT}}
   uploads: |
-    ./html/ => ./www/public_html/
-    ./src/ => ./www/src/
+    ./img/ => ./img/
+    ./overview/ => ./overview_image/
