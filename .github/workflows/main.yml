@@ -1,11 +1,20 @@
-uses: actions/checkout@v3
-uses: Dylan700/sftp-upload-action@v1.2.2
-
-with:
-  server: ${{secrets.SFTP_SERVER}}
-  username: ${{secrets.SFTP_USERNAME}}
-  key: ${{secrets.KEY}}
-  port: ${{secrets.SFTP_PORT}}
-  uploads: |
-    ./img/ => ./img/
-    ./overview/ => ./overview_image/
+name: Staging Deploy
+on:
+  push:                 
+    branches:           
+      - main
+jobs:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action     # JOBの名前
+    runs-on: ubuntu-20.04      # 仮想環境の種類を指定
+    
+    steps:
+      - uses: actions/checkout@master                   
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0   
+        env:                                        
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}     
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }} 
+          FTP_PORT: ${{ secrets.FTP_PORT }} 
+          LOCAL_DIR: "./"               
+          SERVER_DIR: "./img"
